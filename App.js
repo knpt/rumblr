@@ -5,9 +5,11 @@ import {
   StyleSheet,
   View,
   Button, 
-  Alert
+  Alert, 
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Questionnaire from './Components/Questionnaire'
+import Drawer from './Components/Drawer'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -19,22 +21,24 @@ class HomeScreen extends React.Component {
     <View style={styles.container}>
       <Text>Are You Ready To Rumble?</Text>
         <Button
-           onPress={() => navigate('Quiz')}
+           onPress={() => navigate('Quiz', {user: 'Kimberly'})}
            title="Take The Quiz!"
-         />
+         /> 
     </View>
     )
   }
 }
 
 class ChatScreen extends React.Component {
-  static navigationOptions = {
-    title: 'QUIZZY QUIZ',
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: `Welcome, ${navigation.state.params.user}`
+  });
+  
   render() {
+    const { params } = this.props.navigation.state;
     return (
       <View>
-        <Text>Quiz Here</Text>
+        <Text>Quiz Here {params.user}</Text>
       </View>
     );
   }
@@ -51,9 +55,8 @@ const styles = StyleSheet.create({
 
 export default SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
-  Quiz: { screen: ChatScreen},
+  Quiz: { screen: Questionnaire },
 });
-
 
 
 // import React from 'react';
