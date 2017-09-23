@@ -23,19 +23,41 @@ import * as firebase from 'firebase';
    databaseURL: "https://rumblr-f1dad.firebaseio.com",
    storageBucket: "rumblr-f1dad.appspot.com",
  };
+
  const firebaseApp = firebase.initializeApp(firebaseConfig);
 
  const database = firebaseApp.database()
 
+
+
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
+    this.state = {
+      questionDeck: []
+    }
+    this.loadQuestionDeck = this.loadQuestionDeck.bind(this)
+  };
+
+  componentDidMount(){
+   this.loadQuestionDeck()
   }
-   
+
+  loadQuestionDeck(){
+    database.ref().once('value')
+      .then(snapshot=>{
+        this.setState({questionDeck: snapshot.val()})
+      })
+    } 
+  
+
   static navigationOptions = {
     title: 'RUMBLR',
   };
   render() {
+
+    console.log("STATE!!", this.state)
+
     const { navigate } = this.props.navigation;
     return (
     <View style={styles.container}>

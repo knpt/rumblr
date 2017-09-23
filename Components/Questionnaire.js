@@ -26,12 +26,14 @@ import * as firebase from 'firebase';
 //  const database = firebaseApp.database()
 
 
+
+
 const options = {
   1: {a: 'Justin Bieber', b: 'Justin Trudeau'}, 
   2: {a: 'Dog', b: 'Cat'},
-  3: {a: 'Floss?', b: 'No Floss'}
+  3: {a: 'Floss?', b: 'Nope'}, 
+  4: {a: 'I love the nightlife', b: 'I love netflix'}
 }
-
 export class Questionnaire extends React.Component {
   constructor(props){
     super(props);
