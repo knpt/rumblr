@@ -6,12 +6,32 @@ import {
   View,
   Button, 
   Alert, 
+  Navigator
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Questionnaire from './Components/Questionnaire'
 import Drawer from './Components/Drawer'
+import Swiper from 'react-native-swiper'
+
+import * as firebase from 'firebase';
+ 
+
+ // Initialize Firebase
+ const firebaseConfig = {
+   apiKey: "AIzaSyBDCMXQqHx4E9DKRjNE7eVzOIR11wF3ehI",
+   authDomain: "rumblr-f1dad.firebaseapp.com",
+   databaseURL: "https://rumblr-f1dad.firebaseio.com",
+   storageBucket: "rumblr-f1dad.appspot.com",
+ };
+ const firebaseApp = firebase.initializeApp(firebaseConfig);
+
+ const database = firebaseApp.database()
 
 class HomeScreen extends React.Component {
+  constructor(props){
+    super(props);
+  }
+   
   static navigationOptions = {
     title: 'RUMBLR',
   };
@@ -29,20 +49,20 @@ class HomeScreen extends React.Component {
   }
 }
 
-class ChatScreen extends React.Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: `Welcome, ${navigation.state.params.user}`
-  });
+// // class ChatScreen extends React.Component {
+// //   static navigationOptions = ({ navigation }) => ({
+// //     title: `Welcome, ${navigation.state.params.user}`
+// //   });
   
-  render() {
-    const { params } = this.props.navigation.state;
-    return (
-      <View>
-        <Text>Quiz Here {params.user}</Text>
-      </View>
-    );
-  }
-}
+// //   render() {
+// //     const { params } = this.props.navigation.state;
+// //     return (
+// //       <View>
+// //         <Text>Quiz Here {params.user}</Text>
+// //       </View>
+// //     );
+// //   }
+// // }
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +77,87 @@ export default SimpleApp = StackNavigator({
   Home: { screen: HomeScreen },
   Quiz: { screen: Questionnaire },
 });
+
+
+
+// import React, {
+//   AppRegistry,
+//   Component,
+//   Text,
+//   View,
+//   Navigator,
+//   AsyncStorage
+// } from 'react-native';
+
+// import Signup from './Pages/signup';
+// import Account from './Pages/account';
+
+// import Header from './Components/header';
+
+// import Firebase from 'firebase';
+
+// let app = new Firebase("YOUR-FIREBASE-APP-URL");
+
+
+// class rnfirebaseauth extends Component {    
+
+//   constructor(props){
+//     super(props);
+//     this.state = {
+//       component: null,
+//       loaded: false
+//     };
+//   }
+
+//   componentWillMount(){
+
+//     AsyncStorage.getItem('user_data').then((user_data_json) => {
+
+//       let user_data = JSON.parse(user_data_json);
+//       let component = {component: Signup};
+//       if(user_data != null){
+//         app.authWithCustomToken(user_data.token, (error, authData) => {
+//           if(error){
+//             this.setState(component);
+//           }else{
+//             this.setState({component: Account});
+//           }
+//         });
+//       }else{
+//         this.setState(component);
+//       }
+//     });
+
+//   }
+
+//   render(){
+
+//     if(this.state.component){
+//       return (
+//         <Navigator
+//           initialRoute={{component: this.state.component}}
+//           configureScene={() => {
+//             return Navigator.SceneConfigs.FloatFromRight;
+//           }}
+//           renderScene={(route, navigator) => {
+//             if(route.component){
+//               return React.createElement(route.component, { navigator });
+//             }
+//           }}
+//         />
+//       );
+//     }else{
+//       return (
+//         <View style={styles.container}>
+//           <Header text="React Native Firebase Auth" loaded={this.state.loaded} />  
+//           <View style={styles.body}></View>
+//         </View>
+//       );
+//     }
+
+//   }
+
+// }
 
 
 // import React from 'react';
