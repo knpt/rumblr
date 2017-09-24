@@ -12,64 +12,97 @@ import { StackNavigator } from 'react-navigation';
 import Questionnaire from './Components/Questionnaire'
 import Drawer from './Components/Drawer'
 import Swiper from 'react-native-swiper'
-
+import store from './Reducers/index'
+import { Provider } from 'react-redux'
+import { fetchQuestionsThunk } from './Reducers/questions'
 import * as firebase from 'firebase';
- 
+import HomeNavigator from './Components/HomeNav'
 
  // Initialize Firebase
- const firebaseConfig = {
-   apiKey: "AIzaSyBDCMXQqHx4E9DKRjNE7eVzOIR11wF3ehI",
-   authDomain: "rumblr-f1dad.firebaseapp.com",
-   databaseURL: "https://rumblr-f1dad.firebaseio.com",
-   storageBucket: "rumblr-f1dad.appspot.com",
- };
+//  const firebaseConfig = {
+//    apiKey: "AIzaSyBDCMXQqHx4E9DKRjNE7eVzOIR11wF3ehI",
+//    authDomain: "rumblr-f1dad.firebaseapp.com",
+//    databaseURL: "https://rumblr-f1dad.firebaseio.com",
+//    storageBucket: "rumblr-f1dad.appspot.com",
+//  };
 
- const firebaseApp = firebase.initializeApp(firebaseConfig);
+//  const firebaseApp = firebase.initializeApp(firebaseConfig);
 
- const database = firebaseApp.database()
+//  export const database = firebaseApp.database()
 
-
-
-class HomeScreen extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      questionDeck: []
-    }
-    this.loadQuestionDeck = this.loadQuestionDeck.bind(this)
-  };
-
-  componentDidMount(){
-   this.loadQuestionDeck()
-  }
-
-  loadQuestionDeck(){
-    database.ref().once('value')
-      .then(snapshot=>{
-        this.setState({questionDeck: snapshot.val()})
-      })
-    } 
-  
-
-  static navigationOptions = {
-    title: 'RUMBLR',
-  };
-  render() {
-
-    console.log("STATE!!", this.state)
-
-    const { navigate } = this.props.navigation;
-    return (
-    <View style={styles.container}>
-      <Text>Are You Ready To Rumble?</Text>
-        <Button
-           onPress={() => navigate('Quiz', {user: 'Kimberly'})}
-           title="Take The Quiz!"
-         /> 
-    </View>
-    )
-  }
+export default App = ()=> {
+  return (
+    <Provider store={store}>
+      <HomeNavigator/>
+    </Provider>
+  )
 }
+
+
+
+// class HomeScreen extends React.Component {
+//   constructor(props){
+//     super(props);
+
+  //   this.state = {
+  //     questionDeck: []
+  //   }
+  //   this.loadQuestionDeck = this.loadQuestionDeck.bind(this)
+  // };
+
+  // componentDidMount(){
+  //  this.loadQuestionDeck()
+  // }
+
+  // loadQuestionDeck(){
+  //   database.ref().once('value')
+  //     .then(snapshot=>{
+  //       this.setState({questionDeck: snapshot.val()})
+  //     })
+
+    // } 
+  
+    // componentDidMount(){
+    //   this.props.fetchQuestions();
+    // }
+
+//   static navigationOptions = {
+//     title: 'RUMBLR',
+//   };
+//   render() {
+
+
+//     console.log("this.props.questionDeck", this.props.questionDeck)
+
+//     const { navigate } = this.props.navigation;
+//     return (
+//     <View style={styles.container}>
+//       <Text>Are You Ready To Rumble?</Text>
+//         <Button
+//            onPress={() => navigate('Quiz', {user: 'Kimberly'})}
+//            title="Take The Quiz!"
+//          /> 
+//     </View>
+//     )
+//   }
+// }
+
+// const mapStateToProps = state => {
+//   console.log("AM I HERE")
+//   return {
+//     questionDeck: state.questionDeck
+//   }
+// }
+
+// const mapDispatchToProps = dispatch => {
+//   console.log("WKFHSKJFHKJSFHS")
+//   return {
+//     fetchQuestions: function(){
+//       dispatch(fetchQuestionsThunk)
+//     }
+//   }
+// }
+// const AppContainer = connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
 
 // // class ChatScreen extends React.Component {
 // //   static navigationOptions = ({ navigation }) => ({
@@ -86,21 +119,28 @@ class HomeScreen extends React.Component {
 // //   }
 // // }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E9BDA8',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-export default SimpleApp = StackNavigator({
-  Home: { screen: HomeScreen },
-  Quiz: { screen: Questionnaire },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#E9BDA8',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
 
 
+// const Home = StackNavigator({
+//   Home: { screen: HomeScreen },
+//   Quiz: { screen: Questionnaire },
+// });
+
+// export default App = ()=> {
+//   return (
+//     <Provider store={store}>
+//       <Home/>
+//     </Provider>
+//   )
+// }
 
 // import React, {
 //   AppRegistry,
