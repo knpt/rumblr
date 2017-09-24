@@ -7,26 +7,27 @@ import {
   Button, 
  } from 'react-native';
  import { DrawerNavigator} from 'react-navigation';
+ import HomeScreen from './Home'
 
 class OptionsScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Home',
-    drawerIcon: ({ tintColor }) => (
+    drawerIcon: () => (
       <Image
-        source={require('../cat.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
+        source={require('../Images/rlogo.png')}
+        style = {styles.icon}
       />
     ),
   };
 
   render() {
     return (
-      <View style = {styles.container}>
+      <Image source = {require('../Images/hearts.jpg')} style = {styles.container}>
         <Button
           onPress={() => this.props.navigation.navigate('Notifications')}
-          title="Your Matches"
+          title= 'Wait for a Buzz from your One True Love'
         />
-      </View>
+      </Image>
     );
   }
 }
@@ -34,22 +35,22 @@ class OptionsScreen extends React.Component {
 class NotificationsScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Your matches',
-    drawerIcon: ({ tintColor }) => (
+    drawerIcon: () => (
       <Image
-        source={require('../cat.jpg')}
-        style={[styles.icon, {tintColor: tintColor}]}
+        source={require('../Images/rlogo.png')}
+        style = {styles.icon}
       />
     ),
   };
 
   render() {
     return (
-      <View style= {styles.container}>
+      <Image source = {require('../Images/hearts.jpg')} style = {styles.container}>
         <Button
-          onPress={() => this.props.navigation.goBack()}
-          title="Go back home"
+          onPress={() => this.props.navigation.navigate('HomeScreen')}
+          title="Take The Quiz Again"
         />
-      </View>
+      </Image>
     );
   }
 }
@@ -62,10 +63,13 @@ class NotificationsScreen extends React.Component {
   },
   container: {
     flex: 1,
-    backgroundColor: '#E9BDA8',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+    position: 'absolute',
+    width: '100%',
+    height:'100%',
+    backgroundColor: 'transparent'
+  }, 
 });
 
 
@@ -76,4 +80,7 @@ export default Drawer = DrawerNavigator({
   Notifications: {
     screen: NotificationsScreen,
   },
+  // HomeScreen: {
+  //   screen: HomeScreen
+  // }
 });

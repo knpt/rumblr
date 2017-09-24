@@ -41,7 +41,7 @@ class HomeScreen extends React.Component {
       <View >
         <Text style = {styles.textstyle}>Are You Ready To Rumble?</Text>
         <Button
-           onPress={() => navigate('Quiz', {user: 'Kimberly'})}
+           onPress={() => navigate('Quiz')}
            title="Take The Quiz!"
          /> 
          <Button
