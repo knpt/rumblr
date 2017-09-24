@@ -7,9 +7,9 @@ import {
   Button, 
   AsyncStorage, 
   Image,
-  navigator
+  Navigator
 } from 'react-native';
-import * as firebase from 'firebase'
+import {firebaseApp} from '../Reducers/database'
 import Signup from './Signup'
 import {StackNavigator} from 'react-navigation'
 
@@ -20,8 +20,24 @@ export default class Login extends React.Component{
     this.state = {
       email: '',
       password: '',
-      loaded: true
     }
+    this.login = this.login.bind(this)
+  }
+
+  login(){
+    const { navigate } = this.props.navigation
+    firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode === 'auth/wrong-password') {
+        alert('yo check your password!!');
+      } else {
+        alert(errorMessage);
+      }
+      console.log(error);
+    })
+    .then(()=> navigate('Drawer'))
   }
 
   render(){
@@ -48,7 +64,7 @@ export default class Login extends React.Component{
 
         <Button      
           text="Login"
-          onPress={this.login.bind(this)}
+          onPress={this.login}
           style={styles.primary_button}
           title="login"
         />
@@ -56,34 +72,13 @@ export default class Login extends React.Component{
         <Button
           text="Sign Up"
           onPress={() => navigate('Signup')}
-          title="signup"
+          title="go to sign up"
         />
         </View>
       </View> 
     )
   }
 
-  login(){
-    this.setState({
-      loaded: false
-    });
-    firebaseApp.authWithPassword({
-      "email": this.state.email,
-      "password": this.state.password
-    }, (error, user_data) => {
-      this.setState({
-        loaded: true
-      });
-      if(error){
-        alert('Womp! Please Try Again')
-      } else {
-        AsyncStorage.setItem('user_data', JSON.stringify(user_data));
-        this.props.navigator.push({
-          component: Account
-        })
-      }
-    })
-  }
 
 }
 

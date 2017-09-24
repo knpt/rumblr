@@ -5,9 +5,12 @@ import {
   View,
   Button, 
   StyleSheet,
+  Navigator,
   Image
 } from 'react-native'
 import Login from './Login';
+import {firebaseApp} from '../Reducers/database'
+import { StackNavigator } from 'react-navigation';
 
 
 export default class Signup extends React.Component{
@@ -15,17 +18,27 @@ export default class Signup extends React.Component{
     super(props);
 
     this.state = {
-      loaded: true,
       email: '',
       password: ''
     };
+    this.signup = this.signup.bind(this)
   }
 
   signup(){
-    this.setState({
-      loaded: false
-    })
-    //more
+    const { navigate } = this.props.navigation
+    firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode == 'auth/weak-password') {
+       alert('Your password stinks.');
+      } else {
+      alert(errorMessage);
+    }
+    console.log(error);
+  })
+  .then(()=> navigate('Home'))
+
   }
 
   render() {
@@ -50,13 +63,13 @@ export default class Signup extends React.Component{
             placeholder={"Password"}
           />
           <Button 
-            title="sign up"
-            onPress={this.signup.bind(this)} 
+            title="click to sign up"
+            onPress={this.signup} 
            />
 
           <Button 
             title="back to login"
-            onPress={() => navigate('Login')} 
+            onPress={() => navigate('Quiz')} 
            />
         </View>
       </View>

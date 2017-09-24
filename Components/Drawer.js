@@ -24,7 +24,7 @@ class OptionsScreen extends React.Component {
       <View style = {styles.container}>
         <Button
           onPress={() => this.props.navigation.navigate('Notifications')}
-          title="Go to notifications"
+          title="Your Matches"
         />
       </View>
     );
@@ -33,7 +33,7 @@ class OptionsScreen extends React.Component {
 
 class NotificationsScreen extends React.Component {
   static navigationOptions = {
-    drawerLabel: 'Notifications',
+    drawerLabel: 'Your matches',
     drawerIcon: ({ tintColor }) => (
       <Image
         source={require('../cat.jpg')}
