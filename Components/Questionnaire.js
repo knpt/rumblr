@@ -12,8 +12,7 @@ import {
  import { StackNavigator } from 'react-navigation';
  import { connect } from 'react-redux'
  import {concatScore} from '../Reducers/score'
-
-
+ import {cutFromQDeck} from '../Reducers/questions'
 
 // const options = {
 //   1: {a: 'Justin Bieber', b: 'Justin Trudeau'}, 
@@ -39,7 +38,6 @@ class Questionnaire extends React.Component {
   render(){
     const { navigate } = this.props.navigation
     const questionDeck  = this.props.questionDeck
-    console.log("THIS PROPS", this.props)
     
     return (
       <Image source = {require('../Images/lower-antelope-canyon.jpg')} style= {styles.container}>
@@ -47,7 +45,8 @@ class Questionnaire extends React.Component {
           <TouchableOpacity
             onPress={()=> {
               this.props.dispatchScore("a"),
-              navigate('Question')}}
+              this.props.dispatchCutFromQDeck()
+             }}
           >
             <View style={styles.button}>
               <Text style={styles.buttonText}>{questionDeck[1]["a"]}</Text>
@@ -56,8 +55,8 @@ class Questionnaire extends React.Component {
 
           <TouchableOpacity 
             onPress={()=> {
-              this.props.dispatchScore("b")
-              navigate('Question')
+              this.props.dispatchScore("b"),
+              this.props.dispatchCutFromQDeck()
             }}
           >
             <View style={styles.button}>
@@ -81,6 +80,9 @@ const mapDispatchToProps = function(dispatch){
   return {
     dispatchScore(letter){
       dispatch(concatScore(letter))
+    },
+    dispatchCutFromQDeck(){
+      dispatch(cutFromQDeck())
     }
   }
 }
@@ -88,45 +90,8 @@ export default Questionnaire = connect(mapStateToProps, mapDispatchToProps)(Ques
 
 
 
-// export class Question2 extends React.Component {
-  
-//     render(){
-//       const { navigate } = this.props.navigation
-//       return (
-//         <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
-//         <View style = {styles.container}> 
-//           <TouchableOpacity
-//             onPress={()=> navigate('Question')}
-//             title={options[2].a}
-//           >
-//             <View style={styles.button}>
-//               <Text style={styles.buttonText}>{options[2].a}</Text>
-//             </View>
-//           </TouchableOpacity>
-  
-//           <TouchableOpacity 
-//             onPress={()=> navigate('Question')}
-//             title="Next Question"
-//           >
-//             <View style={styles.button}>
-//               <Text style={styles.buttonText}>{options[2].b}</Text>
-//             </View>
-//           </TouchableOpacity>
-//         </View>
-//        </ScrollView>
-//       )
-//     }
-//   }
-
-
-
  const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#E9BDA8',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
+
   container: {
     flex: 1,
     alignItems: 'center',
@@ -149,7 +114,3 @@ export default Questionnaire = connect(mapStateToProps, mapDispatchToProps)(Ques
   }
 });
 
-// const QuestionStack = StackNavigator({
-//   Home: {screen: Questionnaire},
-//   Question: { screen: Question }
-// });

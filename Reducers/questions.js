@@ -3,7 +3,7 @@ import database from './database'
 
 //ACTION TYPE
 const GET_QUESTIONS = "GET_QUESTIONS"
-
+const CUT_FROM_QDECK = "CUT_FROM_QDECK"
 
 //ACTION CREATORS
 
@@ -12,6 +12,10 @@ export function getQuestions(questions){
   return action
 }
 
+export function cutFromQDeck(){
+  const action = {type: CUT_FROM_QDECK};
+  return action 
+}
 
 
 //THUNK CREATOR
@@ -29,21 +33,6 @@ export function fetchQuestionsThunk(){
 }
   
 
-//   return dispatch => {
-
-//     database.ref().once('value')
-//     .then(snapshot=>{
-//       console.log("snapshot.val", snapshot.val())
-//       snapshot.val()
-//     })
-//     .then(questionDeck => {
-//       console.log(questionDeck)
-//       const action = getQuestions(questionDeck);
-//       dispatch(action)
-//     })
-//   }
-// }
-
 //REDUCER
 
 export default function reducer(questionDeck = [], action){
@@ -51,6 +40,9 @@ export default function reducer(questionDeck = [], action){
 
     case GET_QUESTIONS: 
       return action.questions;
+
+    case CUT_FROM_QDECK:
+      return questionDeck = questionDeck.slice(1);
 
     default:
       return questionDeck
