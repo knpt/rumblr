@@ -26,11 +26,8 @@ class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'RUMBLR',
   };
+
   render() {
-
-
-    console.log("this.props.questionDeck", this.props.questionDeck)
-
     const { navigate } = this.props.navigation;
     return (
     <View style={styles.container}>
@@ -45,7 +42,6 @@ class HomeScreen extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log("AM I HERE")
   return {
     questionDeck: state.questionDeck
   }

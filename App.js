@@ -1,21 +1,7 @@
 
 import React from 'react';
-import {
-  Text,
-  StyleSheet,
-  View,
-  Button, 
-  Alert, 
-  Navigator
-} from 'react-native';
-import { StackNavigator } from 'react-navigation';
-import Questionnaire from './Components/Questionnaire'
-import Drawer from './Components/Drawer'
-import Swiper from 'react-native-swiper'
 import store from './Reducers/index'
 import { Provider } from 'react-redux'
-import { fetchQuestionsThunk } from './Reducers/questions'
-import * as firebase from 'firebase';
 import HomeNavigator from './Components/HomeNav'
 
  // Initialize Firebase
@@ -37,8 +23,6 @@ export default App = ()=> {
     </Provider>
   )
 }
-
-
 
 // class HomeScreen extends React.Component {
 //   constructor(props){

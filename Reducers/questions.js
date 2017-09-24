@@ -9,13 +9,14 @@ const firebaseConfig = {
   storageBucket: "rumblr-f1dad.appspot.com",
 };
 
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+export const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export const database = firebaseApp.database()
 
 
 //ACTION TYPE
 const GET_QUESTIONS = "GET_QUESTIONS"
+
 
 //ACTION CREATORS
 
@@ -24,6 +25,8 @@ export function getQuestions(questions){
   return action
 }
 
+
+
 //THUNK CREATOR
 
 export function fetchQuestionsThunk(){
@@ -31,14 +34,12 @@ export function fetchQuestionsThunk(){
     return database.ref('/QuestionSet').once('value')
       .then(snapshot => snapshot.val())
       .then(questionDeck => {
-        console.log("QDECK!", questionDeck)
         const action = getQuestions(questionDeck);
         dispatch(action)
       })
   }
 }
   
-
 
 //   return dispatch => {
 

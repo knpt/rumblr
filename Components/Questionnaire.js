@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
  } from 'react-native';
  import { StackNavigator } from 'react-navigation';
+ import { connect } from 'react-redux'
+ import concatScore from '../Reducers/score'
 
 
 
@@ -19,31 +21,41 @@ const options = {
   3: {a: 'Floss?', b: 'Nope'}, 
   4: {a: 'I love the nightlife', b: 'I love netflix'}
 }
-export class Questionnaire extends React.Component {
+
+class Questionnaire extends React.Component {
   constructor(props){
     super(props);
   }
+  
 
   render(){
     const { navigate } = this.props.navigation
+    const questionDeck  = this.props.questionDeck
+    console.log("THIS PROPS", this.props)
+    
     return (
+
       <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
         <View style = {styles.container}> 
           <TouchableOpacity
-            onPress={()=> {console.log("HI", navigate('Question'))}}
-            title={options.a}
+            onPress={()=> {
+              this.props.dispatchScore("a"),
+              navigate('Question')}}
           >
             <View style={styles.button}>
-              <Text style={styles.buttonText}>{options[1].a}</Text>
+              <Text style={styles.buttonText}>{questionDeck[1]["a"]}</Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity 
-            onPress={()=> navigate('Question')}
-            title="Next Question"
+            onPress={()=> {
+              this.props.dispatchScore("b")
+              navigate('Question')
+            }}
+          
           >
             <View style={styles.button}>
-              <Text style={styles.buttonText}>{options[1].b}</Text>
+              <Text style={styles.buttonText}>{questionDeck[1]["b"]}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -52,35 +64,56 @@ export class Questionnaire extends React.Component {
   }
 }
 
-class Question extends React.Component {
-
-  render(){
-    const { navigate } = this.props.navigation
-    return (
-      <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
-      <View style = {styles.container}> 
-        <TouchableOpacity
-          onPress={()=> navigate('Question')}
-          title={options[2].a}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>{options[2].a}</Text>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          onPress={()=> navigate('Question')}
-          title="Next Question"
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>{options[2].b}</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-     </ScrollView>
-    )
+const mapStateToProps = state => {
+  return {
+    questionDeck: state.questionDeck,
+    score: state.score 
   }
 }
+
+const mapDispatchToProps = function(dispatch){
+  return {
+    dispatchScore(letter){
+      return ()=> {
+        console.log('hi')
+        return dispatch(concatScore(letter))
+      }
+    }
+  }
+}
+export default Questionnaire = connect(mapStateToProps, mapDispatchToProps)(Questionnaire)
+
+
+
+// export class Question2 extends React.Component {
+  
+//     render(){
+//       const { navigate } = this.props.navigation
+//       return (
+//         <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
+//         <View style = {styles.container}> 
+//           <TouchableOpacity
+//             onPress={()=> navigate('Question')}
+//             title={options[2].a}
+//           >
+//             <View style={styles.button}>
+//               <Text style={styles.buttonText}>{options[2].a}</Text>
+//             </View>
+//           </TouchableOpacity>
+  
+//           <TouchableOpacity 
+//             onPress={()=> navigate('Question')}
+//             title="Next Question"
+//           >
+//             <View style={styles.button}>
+//               <Text style={styles.buttonText}>{options[2].b}</Text>
+//             </View>
+//           </TouchableOpacity>
+//         </View>
+//        </ScrollView>
+//       )
+//     }
+//   }
 
 
 
@@ -104,7 +137,7 @@ class Question extends React.Component {
   }
 });
 
-export default QuestionStack = StackNavigator({
-  Home: {screen: Questionnaire},
-  Question: { screen: Question }
-});
+// const QuestionStack = StackNavigator({
+//   Home: {screen: Questionnaire},
+//   Question: { screen: Question }
+// });

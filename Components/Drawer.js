@@ -6,9 +6,9 @@ import {
   Image,
   Button, 
  } from 'react-native';
- import { StackNavigator, DrawerNavigator } from 'react-navigation';
+ import { DrawerNavigator} from 'react-navigation';
 
-class MyHomeScreen extends React.Component {
+class OptionsScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Home',
     drawerIcon: ({ tintColor }) => (
@@ -21,15 +21,17 @@ class MyHomeScreen extends React.Component {
 
   render() {
     return (
-      <Button
-        onPress={() => this.props.navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
+      <View style = {styles.container}>
+        <Button
+          onPress={() => this.props.navigation.navigate('Notifications')}
+          title="Go to notifications"
+        />
+      </View>
     );
   }
 }
 
-class MyNotificationsScreen extends React.Component {
+class NotificationsScreen extends React.Component {
   static navigationOptions = {
     drawerLabel: 'Notifications',
     drawerIcon: ({ tintColor }) => (
@@ -42,10 +44,12 @@ class MyNotificationsScreen extends React.Component {
 
   render() {
     return (
-      <Button
-        onPress={() => this.props.navigation.goBack()}
-        title="Go back home"
-      />
+      <View style= {styles.container}>
+        <Button
+          onPress={() => this.props.navigation.goBack()}
+          title="Go back home"
+        />
+      </View>
     );
   }
 }
@@ -55,14 +59,21 @@ class MyNotificationsScreen extends React.Component {
   icon: {
     width: 24,
     height: 24,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#E9BDA8',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 });
 
+
 export default Drawer = DrawerNavigator({
   Home: {
-    screen: MyHomeScreen,
+    screen: OptionsScreen,
   },
   Notifications: {
-    screen: MyNotificationsScreen,
+    screen: NotificationsScreen,
   },
 });
