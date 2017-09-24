@@ -27,23 +27,17 @@ export function getQuestions(questions){
 //THUNK CREATOR
 
 export function fetchQuestionsThunk(){
-  console.log("IN THUNK")
   return (dispatch) => {
-    console.log("IM HERE")
-    console.log(database.ref().once('value'))
-    return database.ref().once('value')
+    return database.ref('/QuestionSet').once('value')
       .then(snapshot => snapshot.val())
       .then(questionDeck => {
+        console.log("QDECK!", questionDeck)
         const action = getQuestions(questionDeck);
         dispatch(action)
       })
   }
 }
   
-
-
-
-
 
 
 //   return dispatch => {

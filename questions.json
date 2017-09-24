@@ -1,0 +1,30 @@
+{
+  "QuestionSet": {   
+      "1": {
+        "a": "Justin Bieber", 
+        "b": "Justin Trudeau"
+        },    
+      "2": {
+        "a": "Dog", 
+        "b": "Cat"
+        },   
+      "3": {
+        "a": "Floss?", 
+        "b": "Nope"
+        },
+      "4": {
+        "a": "I love the nightlife", 
+        "b": "I love netflix"
+        } 
+  },  
+    "User": {
+      "1": {
+        "name": "David",
+        "score": 8
+      }, 
+      "2": {
+        "name": "Sarah",
+        "score": 4
+      }
+    }
+  }

@@ -8,23 +8,8 @@ import {
   Alert, 
   ScrollView,
   TouchableOpacity,
-  
  } from 'react-native';
  import { StackNavigator } from 'react-navigation';
-
-import * as firebase from 'firebase';
- 
- // Initialize Firebase
-//  const firebaseConfig = {
-//    apiKey: "AIzaSyBDCMXQqHx4E9DKRjNE7eVzOIR11wF3ehI",
-//    authDomain: "rumblr-f1dad.firebaseapp.com",
-//    databaseURL: "https://rumblr-f1dad.firebaseio.com",
-//    storageBucket: "rumblr-f1dad.appspot.com",
-//  };
-//  const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-//  const database = firebaseApp.database()
-
 
 
 
