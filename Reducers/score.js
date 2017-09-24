@@ -18,7 +18,7 @@ export function concatScore(letter){
 export default function reducer(score = [], action){
   switch(action.type){
     case CONCAT_SCORE:
-      return [score, ...action.score];
+      return [...score, action.letter];
     default: 
       return score 
   }

@@ -7,7 +7,7 @@ import Signup from './Signup'
 import Drawer from './Drawer'
 
 export default HomeNavigator = StackNavigator({
-  Home: { screen: Login },
+  Home: { screen: HomeScreen },
   Quiz: { screen: Questionnaire},
   Question: { screen: Question2 },
   Login: { screen: Login },

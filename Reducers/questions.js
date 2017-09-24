@@ -1,17 +1,4 @@
-import * as firebase from 'firebase'
-// import database from '../App'
-
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBDCMXQqHx4E9DKRjNE7eVzOIR11wF3ehI",
-  authDomain: "rumblr-f1dad.firebaseapp.com",
-  databaseURL: "https://rumblr-f1dad.firebaseio.com",
-  storageBucket: "rumblr-f1dad.appspot.com",
-};
-
-export const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-export const database = firebaseApp.database()
+import database from './database'
 
 
 //ACTION TYPE
@@ -37,6 +24,7 @@ export function fetchQuestionsThunk(){
         const action = getQuestions(questionDeck);
         dispatch(action)
       })
+      .catch((error)=> console.log(error))
   }
 }
   

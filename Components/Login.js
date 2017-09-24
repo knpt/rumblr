@@ -6,6 +6,7 @@ import {
   View, 
   Button, 
   AsyncStorage, 
+  Image,
   navigator
 } from 'react-native';
 import * as firebase from 'firebase'
@@ -27,6 +28,9 @@ export default class Login extends React.Component{
     const { navigate } = this.props.navigation
     return (
       <View style = {styles.container}>
+        <View>
+          <Image source = {require('../Images/logo2.png')}/>
+        </View>
         <View>
         <TextInput
           onChangeText={(text)=> this.setState({email: text})}
@@ -104,5 +108,5 @@ const styles = StyleSheet.create({
   primary_button_text: {
     color: '#FFF',
     fontSize: 18
-  }
+  },
 })

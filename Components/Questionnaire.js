@@ -11,22 +11,30 @@ import {
  } from 'react-native';
  import { StackNavigator } from 'react-navigation';
  import { connect } from 'react-redux'
- import concatScore from '../Reducers/score'
+ import {concatScore} from '../Reducers/score'
 
 
 
-const options = {
-  1: {a: 'Justin Bieber', b: 'Justin Trudeau'}, 
-  2: {a: 'Dog', b: 'Cat'},
-  3: {a: 'Floss?', b: 'Nope'}, 
-  4: {a: 'I love the nightlife', b: 'I love netflix'}
-}
+// const options = {
+//   1: {a: 'Justin Bieber', b: 'Justin Trudeau'}, 
+//   2: {a: 'Dog', b: 'Cat'},
+//   3: {a: 'Floss?', b: 'Nope'}, 
+//   4: {a: 'I love the nightlife', b: 'I love netflix'}
+// }
 
 class Questionnaire extends React.Component {
   constructor(props){
     super(props);
   }
   
+  static navigationOptions = {
+    title: <Image source = {require('../Images/logo1.png')}></Image>,
+    headerStyle: {
+      backgroundColor: '#F0DDE7',
+      paddingTop: 30,
+      paddingBottom: 20
+    }
+  };
 
   render(){
     const { navigate } = this.props.navigation
@@ -34,8 +42,7 @@ class Questionnaire extends React.Component {
     console.log("THIS PROPS", this.props)
     
     return (
-
-      <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
+      <Image source = {require('../Images/lower-antelope-canyon.jpg')} style= {styles.container}>
         <View style = {styles.container}> 
           <TouchableOpacity
             onPress={()=> {
@@ -52,14 +59,13 @@ class Questionnaire extends React.Component {
               this.props.dispatchScore("b")
               navigate('Question')
             }}
-          
           >
             <View style={styles.button}>
               <Text style={styles.buttonText}>{questionDeck[1]["b"]}</Text>
             </View>
           </TouchableOpacity>
         </View>
-       </ScrollView>
+       </Image>
     )
   }
 }
@@ -74,10 +80,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = function(dispatch){
   return {
     dispatchScore(letter){
-      return ()=> {
-        console.log('hi')
-        return dispatch(concatScore(letter))
-      }
+      dispatch(concatScore(letter))
     }
   }
 }
@@ -118,11 +121,20 @@ export default Questionnaire = connect(mapStateToProps, mapDispatchToProps)(Ques
 
 
  const styles = StyleSheet.create({
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#E9BDA8',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   container: {
     flex: 1,
-    backgroundColor: '#E9BDA8',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
+    height:'100%',
+    backgroundColor: 'transparent',
   },
   button: {
     marginBottom: 30,

@@ -22,11 +22,20 @@ const options = {
 }
 class Question2 extends React.Component {
 
+  static navigationOptions = {
+    title: <Image source = {require('../Images/logo1.png')}></Image>,
+    headerStyle: {
+      backgroundColor: '#F0DDE7',
+      paddingTop: 30,
+      paddingBottom: 20
+    }
+  };
+
     render(){
       const { navigate } = this.props.navigation
       console.log("THIS.PROPS IN QUESTION", this.props)
       return (
-        <ScrollView horizontal = {true} contentContainerStyle = {styles.container}>
+      <Image source = {require('../Images/lower-antelope-canyon.jpg')} style= {styles.container}>
         <View style = {styles.container}> 
           <TouchableOpacity
             onPress={()=> navigate('Question')}
@@ -46,7 +55,7 @@ class Question2 extends React.Component {
             </View>
           </TouchableOpacity>
         </View>
-       </ScrollView>
+       </Image>
       )
     }
   }
@@ -65,9 +74,12 @@ class Question2 extends React.Component {
  const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9BDA8',
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    width: '100%',
+    height:'100%',
+    backgroundColor: 'transparent',
   },
   button: {
     marginBottom: 30,

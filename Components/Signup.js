@@ -4,7 +4,8 @@ import {
   TextInput,
   View,
   Button, 
-  StyleSheet
+  StyleSheet,
+  Image
 } from 'react-native'
 import Login from './Login';
 
@@ -31,6 +32,9 @@ export default class Signup extends React.Component{
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
+        <View>
+          <Image style = {styles.imagestyle }source = {require('../Images/logo2.png')}/>
+        </View>
         <View>
   		    <TextInput
     		    style={styles.textInput}
