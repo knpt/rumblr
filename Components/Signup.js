@@ -19,14 +19,37 @@ export default class Signup extends React.Component{
 
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      location: ''
     };
     this.signup = this.signup.bind(this)
   }
 
   signup(){
     const { navigate } = this.props.navigation
+    const username= this.state.email.split('@')[0]
+   
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude
+        const longitude = position.coords.longitude
+        this.setState({location: {latitude, longitude}});
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    )
+    
+    
     firebaseApp.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+    .then((user)=> {
+      firebaseApp.database().ref('users').child(user.uid).set(username.toLowerCase())
+      return user
+    })
+    .then((user)=> {
+      firebaseApp.database().ref(`users/${user.uid}`).child(username).set(this.state.location)
+      
+    })
+  
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;

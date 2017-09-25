@@ -46,7 +46,6 @@ class Questionnaire extends React.Component {
             onPress={()=> {
               this.props.dispatchScore("a");
               if(questionDeck.length=== 2){
-                console.log("1 left")
                   navigate('Drawer')
               }
               else if(questionDeck.length>1){
@@ -61,8 +60,13 @@ class Questionnaire extends React.Component {
 
           <TouchableOpacity 
             onPress={()=> {
-              this.props.dispatchScore("b"),
-              this.props.dispatchCutFromQDeck()
+              this.props.dispatchScore("b");
+              if(questionDeck.length=== 2){
+                  navigate('Drawer')
+              }
+              else if(questionDeck.length>1){
+                this.props.dispatchCutFromQDeck()
+              } 
             }}
           >
             <View style={styles.button}>

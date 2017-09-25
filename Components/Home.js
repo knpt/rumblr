@@ -11,15 +11,37 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchQuestionsThunk } from '../Reducers/questions'
-
+// import {sendLocationThunk} from '../Reducers/user'
 
 
 class HomeScreen extends React.Component {
   constructor(props){
     super(props);
-    } 
+
+    this.state = {
+      latitude: '',
+      longitude: ''
+    }
+  } 
+
     componentDidMount(){
       this.props.fetchQuestions();
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude
+          const longitude = position.coords.longitude
+          this.setState({latitude: latitude, longitude: longitude});
+        },
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      )
+      
+      // .then(()=> {
+      //   this.props.sendLocation(this.state.latitude, this.state.longitude)
+      // })
+
+      
     }
 
   static navigationOptions = {
@@ -32,6 +54,7 @@ class HomeScreen extends React.Component {
   };
 
   render() {
+    console.log("THIS STATE LOCATION", this.state.latitude, this.state.longitude)
     const { navigate } = this.props.navigation;
     return (
     <Image source = {require('../Images/rock.jpg')} style = {styles.container}>
@@ -64,6 +87,9 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchQuestions: function(){
       dispatch(fetchQuestionsThunk())
+    }, 
+    sendLocation: function(lat, long){
+      dispatch(sendLocationThunk())
     }
   }
 }

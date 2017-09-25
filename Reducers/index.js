@@ -3,10 +3,12 @@ import questionDeck from './questions'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import score from './score'
+// import user from './user'
 
 const rootReducer = combineReducers({
   questionDeck,
-  score
+  score, 
+  // user
 })
 
 export default createStore(rootReducer, applyMiddleware(thunkMiddleware, createLogger()))

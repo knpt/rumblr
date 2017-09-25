@@ -4,9 +4,7 @@ const CONCAT_SCORE = "CONCAT_SCORE"
 
 //ACTION CREATORS
 export function concatScore(letter){
-  console.log('letter')
   const action = {type: CONCAT_SCORE, letter};
-  console.log("action", action)
   return action 
 }
 

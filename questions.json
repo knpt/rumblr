@@ -17,14 +17,6 @@
         "b": "I love netflix"
         } 
   },  
-    "User": {
-      "1": {
-        "name": "David",
-        "score": 8
-      }, 
-      "2": {
-        "name": "Sarah",
-        "score": 4
-      }
+    "Users": {
     }
   }
