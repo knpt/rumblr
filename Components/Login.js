@@ -9,11 +9,13 @@ import {
   Image,
   Navigator
 } from 'react-native';
+import { connect } from 'react-redux'
 import {firebaseApp} from '../Reducers/database'
 import Signup from './Signup'
 import {StackNavigator} from 'react-navigation'
+import {setUserIdThunk} from '../Reducers/user'
 
-export default class Login extends React.Component{
+class Login extends React.Component{
   constructor(props){
     super(props);
 
@@ -23,10 +25,22 @@ export default class Login extends React.Component{
     }
     this.login = this.login.bind(this)
   }
+  
+  static navigationOptions = {
+    // title: <Image source = {require('../Images/logo1.png')}></Image>,
+    headerStyle: {
+      backgroundColor: '#F0DDE7',
+      paddingTop: 30,
+      paddingBottom: 20
+    }
+  };
 
   login(){
     const { navigate } = this.props.navigation
     firebaseApp.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then((user)=> {
+      this.props.dispatchSetUserId(user.uid)
+    })
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -78,14 +92,23 @@ export default class Login extends React.Component{
       </View> 
     )
   }
-
-
 }
+
+const mapDispatchToProps = function(dispatch){
+  return {
+    dispatchSetUserId(uid){
+      dispatch(setUserIdThunk(uid))
+    }
+  }
+}
+
+const mapStateToProps = ()=> {return {}}
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9BDA8',
+    backgroundColor: '#F0DDE7',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -105,3 +128,5 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 })
+
+export default Login = connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -5,6 +5,7 @@ import {
   View,
   Image,
   Button, 
+  Vibration
  } from 'react-native';
  import { DrawerNavigator} from 'react-navigation';
  import HomeScreen from './Home'
@@ -24,7 +25,10 @@ class OptionsScreen extends React.Component {
     return (
       <Image source = {require('../Images/hearts.jpg')} style = {styles.container}>
         <Button
-          onPress={() => this.props.navigation.navigate('Notifications')}
+          onPress={() => {
+            Vibration.vibrate()
+            this.props.navigation.navigate('Notifications')
+          }}
           title= 'Wait for a Buzz from your One True Love'
         />
       </Image>
@@ -46,10 +50,7 @@ class NotificationsScreen extends React.Component {
   render() {
     return (
       <Image source = {require('../Images/hearts.jpg')} style = {styles.container}>
-        <Button
-          onPress={() => this.props.navigation.navigate('HomeScreen')}
-          title="Take The Quiz Again"
-        />
+      <Text style = {styles.textstyle}> They're Out There I Know It</Text>
       </Image>
     );
   }
@@ -70,6 +71,10 @@ class NotificationsScreen extends React.Component {
     height:'100%',
     backgroundColor: 'transparent'
   }, 
+  textstyle: {
+    fontSize: 20,
+    color: 'white'
+  }
 });
 
 
@@ -80,7 +85,4 @@ export default Drawer = DrawerNavigator({
   Notifications: {
     screen: NotificationsScreen,
   },
-  // HomeScreen: {
-  //   screen: HomeScreen
-  // }
 });

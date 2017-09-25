@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { fetchQuestionsThunk } from '../Reducers/questions'
-// import {sendLocationThunk} from '../Reducers/user'
+import {sendLocationThunk} from '../Reducers/location'
 
 
 class HomeScreen extends React.Component {
@@ -19,29 +19,30 @@ class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
-      latitude: '',
-      longitude: ''
+      location: ''
     }
   } 
 
     componentDidMount(){
       this.props.fetchQuestions();
 
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
+      var getPosition = function (options) {
+        return new Promise(function (resolve, reject) {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
+      }
+      
+      getPosition()
+        .then((position) => {
+          console.log(position);
           const latitude = position.coords.latitude
           const longitude = position.coords.longitude
-          this.setState({latitude: latitude, longitude: longitude});
-        },
-        (error) => alert(error.message),
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-      )
-      
-      // .then(()=> {
-      //   this.props.sendLocation(this.state.latitude, this.state.longitude)
-      // })
-
-      
+          this.setState({location: {latitude, longitude}});
+          this.props.sendLocation({latitude, longitude})
+        })
+        .catch((err) => {
+          console.error(err.message);
+        });
     }
 
   static navigationOptions = {
@@ -54,7 +55,7 @@ class HomeScreen extends React.Component {
   };
 
   render() {
-    console.log("THIS STATE LOCATION", this.state.latitude, this.state.longitude)
+    console.log("THIS STATE LOCATION", this.state.location)
     const { navigate } = this.props.navigation;
     return (
     <Image source = {require('../Images/rock.jpg')} style = {styles.container}>
@@ -69,7 +70,7 @@ class HomeScreen extends React.Component {
          /> 
          <Button
            onPress={() => navigate('Login')}
-           title="Login"
+           title="login/signup"
          /> 
       </View>
     </Image>
@@ -88,8 +89,8 @@ const mapDispatchToProps = dispatch => {
     fetchQuestions: function(){
       dispatch(fetchQuestionsThunk())
     }, 
-    sendLocation: function(lat, long){
-      dispatch(sendLocationThunk())
+    sendLocation: function(location){
+      dispatch(sendLocationThunk(location))
     }
   }
 }

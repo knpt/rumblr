@@ -8,12 +8,13 @@ import {
   Navigator,
   Image
 } from 'react-native'
+import { connect } from 'react-redux'
 import Login from './Login';
 import {firebaseApp} from '../Reducers/database'
 import { StackNavigator } from 'react-navigation';
+import {setUserIdThunk} from '../Reducers/user'
 
-
-export default class Signup extends React.Component{
+class Signup extends React.Component{
   constructor(props){
     super(props);
 
@@ -24,6 +25,15 @@ export default class Signup extends React.Component{
     };
     this.signup = this.signup.bind(this)
   }
+
+  static navigationOptions = {
+    // title: <Image source = {require('../Images/logo1.png')}></Image>,
+    headerStyle: {
+      backgroundColor: '#F0DDE7',
+      paddingTop: 30,
+      paddingBottom: 20
+    }
+  };
 
   signup(){
     const { navigate } = this.props.navigation
@@ -46,10 +56,12 @@ export default class Signup extends React.Component{
       return user
     })
     .then((user)=> {
-      firebaseApp.database().ref(`users/${user.uid}`).child(username).set(this.state.location)
-      
+      firebaseApp.database().ref(`users/${user.uid}`).child(username).set({location: this.state.location})
+      return user.uid
     })
-  
+    .then((userid)=> {
+      this.props.dispatchSetUserId(userid)
+    })
     .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -60,8 +72,7 @@ export default class Signup extends React.Component{
     }
     console.log(error);
   })
-  .then(()=> navigate('Home'))
-
+  .then(()=> navigate('Quiz'))
   }
 
   render() {
@@ -86,13 +97,13 @@ export default class Signup extends React.Component{
             placeholder={"Password"}
           />
           <Button 
-            title="click to sign up"
+            title="tap here to sign up"
             onPress={this.signup} 
            />
 
           <Button 
             title="back to login"
-            onPress={() => navigate('Quiz')} 
+            onPress={() => navigate('Login')} 
            />
         </View>
       </View>
@@ -100,10 +111,20 @@ export default class Signup extends React.Component{
   }
 }
 
+const mapDispatchToProps = function(dispatch){
+  return {
+    dispatchSetUserId(uid){
+      dispatch(setUserIdThunk(uid))
+    }
+  }
+}
+
+const mapStateToProps = ()=> {return {}}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E9BDA8',
+    backgroundColor: '#F0DDE7',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -123,3 +144,5 @@ const styles = StyleSheet.create({
     fontSize: 18
   }
 })
+
+export default Signup = connect(mapStateToProps, mapDispatchToProps)(Signup)

@@ -1,21 +1,29 @@
-// import database from './database'
-
 // //ACTION TYPE
-// const SEND_LOCATION = "SEND_LOCATION"
+const SET_USERID = "SET_USERID"
 
 // //ACTION CREATOR
+export function setUserId(uid){
+  const action = {type: SET_USERID, uid};
+  return action
+}
 
-// export function sendLocation(location){
-//   const action = {type: SEND_LOCATION, location}
-//   return action
-// }
+
 
 // //THUNK CREATOR
+export function setUserIdThunk(uid){
+  return (dispatch)=> {
+    dispatch(setUserId(uid))
+  }
+}
 
-// export function sendLocationThunk(lat, long){
-//   return (dispatch) => {
-//     let path = "/User" + user
-//     return database.ref(/User/)
-//   }
-// }
+
+
 // //REDUCER
+export default function reducer(userid = '', action){
+  switch(action.type){
+    case SET_USERID:
+      return action.uid
+    default:
+      return userid
+  }
+}

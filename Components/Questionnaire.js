@@ -13,6 +13,7 @@ import {
  import { connect } from 'react-redux'
  import {concatScore} from '../Reducers/score'
  import {cutFromQDeck} from '../Reducers/questions'
+ import {firebaseApp} from '../Reducers/database'
 
 // const options = {
 //   1: {a: 'Justin Bieber', b: 'Justin Trudeau'}, 
@@ -24,6 +25,8 @@ import {
 class Questionnaire extends React.Component {
   constructor(props){
     super(props);
+
+    this.sendScoreToDb = this.sendScoreToDb.bind(this)
   }
   
   static navigationOptions = {
@@ -34,6 +37,13 @@ class Questionnaire extends React.Component {
       paddingBottom: 20
     }
   };
+
+
+
+  sendScoreToDb(score){
+    const userId= this.props.userId
+    firebaseApp.database().ref(`users/${userId}`+'/score').set(this.props.score)
+  }
 
   render(){
     const { navigate } = this.props.navigation
@@ -46,6 +56,7 @@ class Questionnaire extends React.Component {
             onPress={()=> {
               this.props.dispatchScore("a");
               if(questionDeck.length=== 2){
+                this.sendScoreToDb(this.props.score)
                   navigate('Drawer')
               }
               else if(questionDeck.length>1){
@@ -62,7 +73,8 @@ class Questionnaire extends React.Component {
             onPress={()=> {
               this.props.dispatchScore("b");
               if(questionDeck.length=== 2){
-                  navigate('Drawer')
+                this.sendScoreToDb(this.props.score);
+                navigate('Drawer')
               }
               else if(questionDeck.length>1){
                 this.props.dispatchCutFromQDeck()
@@ -82,7 +94,8 @@ class Questionnaire extends React.Component {
 const mapStateToProps = state => {
   return {
     questionDeck: state.questionDeck,
-    score: state.score 
+    score: state.score, 
+    userId: state.user
   }
 }
 
